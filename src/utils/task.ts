@@ -1,14 +1,16 @@
-export type Task = {
-  id?: string;
+export interface Task {
+  id: string;
   title: string;
-  description?: string;
+  description: string;
   startDate: string;
   endDate: string;
+  completed: boolean;
   createdAt: string;
   userId: string;
-  completed: boolean;
   notificationId?: {
     dayBeforeId?: string;
     sameDayId?: string;
-  }; // 🆕 pour pouvoir l’annuler plus tard
-};
+    startDayId?: string;
+    sevenDaysAfterId?: string;
+  };
+}

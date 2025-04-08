@@ -33,31 +33,16 @@ const EditTaskScreen = () => {
       Alert.alert('Erreur', 'La date de fin ne peut pas être avant la date de début');
       return;
     }
-
+  
     setLoading(true);
     try {
-      // Si la date de fin a changé → annule l'ancienne notif
-      if (endDate.toISOString() !== task.endDate && task.notificationId) {
-        await cancelNotification(task.notificationId.dayBeforeId!);
-        await cancelNotification(task.notificationId.sameDayId!);
-      }
-
-      let newNotificationId = task.notificationId;
-
-      // Reprogrammer une notif si la nouvelle date est future
-      if (endDate.toISOString() !== task.endDate) {
-        const notifId = await scheduleTaskNotification(task.id!,title, endDate);
-        newNotificationId = notifId;
-      }
-
       await updateTask(task.id!, {
         title,
         description,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        notificationId: newNotificationId,
       });
-
+  
       Alert.alert('Succès', 'Tâche mise à jour');
       navigation.goBack();
     } catch (err) {
@@ -67,6 +52,7 @@ const EditTaskScreen = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: colors.background }]}>

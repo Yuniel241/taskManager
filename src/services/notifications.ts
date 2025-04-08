@@ -45,8 +45,8 @@ export const scheduleTaskNotification = async (
     if (dayBefore > now) {
       const dayBeforeId = await Notifications.scheduleNotificationAsync({
         content: {
-          title: '⏰ Tâche à venir demain',
-          body: `La tâche "${title}" se termine demain.`,
+          title: '⏰ Projet à venir demain',
+          body: `Le projet "${title}" se termine demain.`,
           data: { taskId },
         },
         trigger: {
@@ -66,7 +66,7 @@ export const scheduleTaskNotification = async (
       const sameDayId = await Notifications.scheduleNotificationAsync({
         content: {
           title: '🚨 Dernier jour pour :',
-          body: `La tâche "${title}" se termine aujourd'hui.`,
+          body: `Le projet "${title}" se termine aujourd'hui.`,
           data: { taskId },
         },
         trigger: {

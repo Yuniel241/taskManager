@@ -43,7 +43,7 @@ const EditTaskScreen = () => {
         endDate: endDate.toISOString(),
       });
   
-      Alert.alert('Succès', 'Tâche mise à jour');
+      Alert.alert('Succès', 'Projet mis à jour');
       navigation.goBack();
     } catch (err) {
       console.error(err);
@@ -56,7 +56,7 @@ const EditTaskScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: colors.background }]}>
-      <Title style={[styles.title, { color: colors.primary }]}>Modifier la tâche</Title>
+      <Title style={[styles.title, { color: colors.primary }]}>Modifier le projet</Title>
 
       <TextInput
         label="Titre"

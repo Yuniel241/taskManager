@@ -25,9 +25,9 @@ const Navigation = () => {
           <Stack.Screen
             name="AddTask"
             component={AddTaskScreen}
-            options={{ title: 'Ajouter une tâche' }}
+            options={{ title: 'Ajouter un projet' }}
           />
-          <Stack.Screen name="EditTask" component={EditTaskScreen} />
+          <Stack.Screen name="EditTask" component={EditTaskScreen} options={{ title: 'Editer un projet' }} />
           {/* D'autres écrans protégés peuvent être ajoutés ici */}
         </Stack.Navigator>
       ) : (

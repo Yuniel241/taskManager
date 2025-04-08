@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/navigation';
 import { useAuth } from '../context/AuthContext';
+import { Alert } from 'react-native';
 
 const HomeScreen = () => {
   const { colors } = useTheme();
@@ -16,13 +17,14 @@ const HomeScreen = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [expandedTasks, setExpandedTasks] = useState<Set<string>>(new Set());
 
   const loadTasks = async () => {
     try {
       const userTasks = await getUserTasks();
       setTasks(userTasks);
     } catch (err) {
-      console.error('Erreur chargement tâches :', err);
+      console.error('Erreur chargement projet :', err);
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -43,34 +45,90 @@ const HomeScreen = () => {
     }
   };
 
-  const renderItem = ({ item }: { item: Task }) => (
-    <Card style={[styles.card, item.completed && styles.completedCard]}>
-      <Card.Title
-        title={`${item.completed ? '✅ ' : ''}${item.title}`}
-        titleStyle={item.completed ? styles.completedText : undefined}
-      />
-      <Card.Content>
-        <Text style={item.completed ? styles.completedText : undefined}>{item.description}</Text>
-        <Text style={styles.date}>
-          📅 Du {new Date(item.startDate).toLocaleDateString()} au {new Date(item.endDate).toLocaleDateString()}
-        </Text>
-      </Card.Content>
-      <Card.Actions style={styles.actions}>
-        <Button icon="check" onPress={() => handleToggleCompleted(item)}>
-          {item.completed ? 'Annuler' : 'Compléter'}
-        </Button>
-        <Button icon="pencil" onPress={() => navigation.navigate('EditTask', { task: item })}>
-          Modifier
-        </Button>
-        <Button icon="delete" onPress={async () => {
-          await deleteTask(item.id!);
-          loadTasks();
-        }} color="red">
-          Supprimer
-        </Button>
-      </Card.Actions>
-    </Card>
-  );
+  const toggleExpanded = (taskId: string) => {
+    setExpandedTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+  
+
+  const renderItem = ({ item }: { item: Task }) => {
+    const isExpanded = expandedTasks.has(item.id!);
+    const description = item.description || '';
+    const truncated = description.length > 100 && !isExpanded;
+  
+    return (
+      <Card style={[styles.card, item.completed && styles.completedCard]}>
+        <Card.Title
+          title={`${item.completed ? '✅ ' : ''}${item.title}`}
+          titleStyle={item.completed ? styles.completedText : undefined}
+        />
+        <Card.Content>
+          <Text style={item.completed ? styles.completedText : undefined}>
+            {truncated ? `${description.slice(0, 100)}...` : description}
+          </Text>
+  
+          {description.length > 100 && (
+            <Button
+              compact
+              mode="text"
+              onPress={() => toggleExpanded(item.id!)}
+              labelStyle={{ fontSize: 12 }}
+            >
+              {isExpanded ? 'Voir moins' : 'Voir plus'}
+            </Button>
+          )}
+  
+          <Text style={styles.date}>
+            📅 Du {new Date(item.startDate).toLocaleDateString()} au {new Date(item.endDate).toLocaleDateString()}
+          </Text>
+        </Card.Content>
+  
+        <Card.Actions style={styles.actions}>
+          <Button icon="check" onPress={() => handleToggleCompleted(item)}>
+            {item.completed ? 'Annuler' : 'Compléter'}
+          </Button>
+          <Button icon="pencil" onPress={() => navigation.navigate('EditTask', { task: item })}>
+            Modifier
+          </Button>
+          <Button
+            icon="delete"
+            onPress={() => {
+              Alert.alert(
+                "Confirmer la suppression",
+                "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
+                [
+                  {
+                    text: "Annuler",
+                    style: "cancel",
+                  },
+                  {
+                    text: "Supprimer",
+                    style: "destructive",
+                    onPress: async () => {
+                      await deleteTask(item.id!);
+                      loadTasks();
+                    },
+                  },
+                ],
+                { cancelable: true }
+              );
+            }}
+            buttonColor="red"
+          >
+            Supprimer
+          </Button>
+        </Card.Actions>
+      </Card>
+    );
+  };
+  
 
   if (loading) {
     return <ActivityIndicator animating={true} style={styles.loading} />;
@@ -79,7 +137,7 @@ const HomeScreen = () => {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Title style={styles.title}>Mes tâches</Title>
+        <Title style={styles.title}>Mes projets</Title>
         <Button mode="outlined" onPress={logout}>
           Se déconnecter
         </Button>

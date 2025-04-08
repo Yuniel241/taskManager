@@ -52,11 +52,11 @@ const AddTaskScreen = () => {
         await newTaskRef.update({ notificationId });
       }
 
-      Alert.alert('Succès', 'Tâche ajoutée avec notification');
+      Alert.alert('Succès', 'Projet ajouté avec notification');
       navigation.goBack();
     } catch (err) {
       console.error(err);
-      Alert.alert('Erreur', 'Impossible d’ajouter la tâche');
+      Alert.alert('Erreur', 'Impossible d’ajouter le projet');
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,7 @@ const AddTaskScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: colors.background }]}>
-      <Title style={[styles.title, { color: colors.primary }]}>Ajouter une tâche</Title>
+      <Title style={[styles.title, { color: colors.primary }]}>Ajouter un projet</Title>
 
       <TextInput
         label="Titre"
@@ -121,7 +121,7 @@ const AddTaskScreen = () => {
         disabled={loading}
         style={styles.addButton}
       >
-        Ajouter la tâche
+        Ajouter le projet
       </Button>
     </ScrollView>
   );

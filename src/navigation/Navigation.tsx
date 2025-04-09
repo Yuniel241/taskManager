@@ -7,28 +7,46 @@ import { useAuth } from '../context/AuthContext';
 import AddTaskScreen from '../screens/AddTaskScreen';
 import EditTaskScreen from '../screens/EditTaskScreen';
 import { RootStackParamList } from '../utils/navigation';
+import VerifyEmailScreen from '../screens/VerifyEmailScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return null; // ou un <LoadingScreen /> 
+  }
 
   return (
     <NavigationContainer>
       {user ? (
         <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AddTask"
-            component={AddTaskScreen}
-            options={{ title: 'Ajouter un projet' }}
-          />
-          <Stack.Screen name="EditTask" component={EditTaskScreen} options={{ title: 'Editer un projet' }} />
-          {/* D'autres écrans protégés peuvent être ajoutés ici */}
+          {!user.emailVerified ? (
+            <Stack.Screen
+              name="VerifyEmail"
+              component={VerifyEmailScreen}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <>
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AddTask"
+                component={AddTaskScreen}
+                options={{ title: 'Ajouter un projet' }}
+              />
+              <Stack.Screen
+                name="EditTask"
+                component={EditTaskScreen}
+                options={{ title: 'Editer un projet' }}
+              />
+            </>
+          )}
         </Stack.Navigator>
       ) : (
         <AuthStack />
@@ -36,5 +54,6 @@ const Navigation = () => {
     </NavigationContainer>
   );
 };
+
 
 export default Navigation;

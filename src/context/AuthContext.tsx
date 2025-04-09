@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getApp } from '@react-native-firebase/app';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes, signInWithEmailAndPassword } from '@react-native-firebase/auth';
+
 
 interface AuthContextType {
   user: FirebaseAuthTypes.User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<FirebaseAuthTypes.UserCredential>;
   logout: () => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   sendEmailVerification: () => Promise<void>;
@@ -35,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const userCredential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
       await userCredential.user.sendEmailVerification();
-      await firebaseAuth.signOut(); // Déconnexion après inscription jusqu'à vérification
     } catch (error) {
       console.error('Erreur d’inscription :', error);
       throw error;
@@ -43,15 +43,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     }
   };
+  
 
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
       const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
-      if (!userCredential.user.emailVerified) {
-        await firebaseAuth.signOut();
-        throw new Error("Email non vérifié.");
-      }
+      return userCredential;
     } catch (error) {
       console.error('Erreur de connexion :', error);
       throw error;

@@ -9,6 +9,7 @@ import {
   Keyboard,
   ScrollView,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { TextInput, Button, Text, useTheme } from 'react-native-paper';
 import { useAuth } from '../context/AuthContext';
@@ -93,15 +94,23 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
     setSuccessMessage('');
     
     try {
-      await login(email, password);
+      const userCredential = await login(email, password);
+      const user = userCredential.user;
+      if (!user.emailVerified) {
+        await userCredential.user.sendEmailVerification();
+        setError('Veuillez valider votre adresse email avant de continuer.');
+        return;
+      }
+      setSuccessMessage('Connexion réussie !');
+
     } catch (err: any) {
       let errorMessage = 'Erreur de connexion';
       switch (err.code) {
         case 'auth/user-not-found':
-          errorMessage = 'Aucun utilisateur trouvé avec cet email';
+          errorMessage ='Aucun utilisateur trouvé avec cet email';
           break;
-        case 'auth/wrong-password':
-          errorMessage = 'Mot de passe incorrect';
+        case 'auth/invalid-credential':
+          errorMessage = 'Adresse email ou mot de passe incorrect';
           break;
         case 'auth/invalid-email':
           errorMessage = 'Email invalide';
@@ -116,7 +125,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
           errorMessage = 'Problème de connexion réseau';
           break;
       }
-      setError(errorMessage);
+      Alert.alert('Erreur', errorMessage);
     } finally {
       setLoading(prev => ({ ...prev, login: false }));
     }

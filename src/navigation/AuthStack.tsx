@@ -2,9 +2,10 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import EmailVerificationScreen from '../screens/EmailVerificationScreen';
+import { RootStackParamList} from '../utils/navigation';
 
-const Stack = createNativeStackNavigator();
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AuthStack = () => {
   return (
@@ -19,14 +20,7 @@ const AuthStack = () => {
         component={RegisterScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="EmailVerification"
-        component={EmailVerificationScreen}
-        options={{
-          headerBackVisible: false,
-          title: 'Vérification de l’email',
-        }}
-      />
+    
     </Stack.Navigator>
   );
 };

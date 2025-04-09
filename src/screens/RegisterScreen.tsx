@@ -11,9 +11,11 @@ import {
 import { TextInput, Button, Text, useTheme } from 'react-native-paper';
 import { useAuth } from '../context/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../utils/navigation';
 
 interface RegisterScreenProps {
-  navigation: any;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
 }
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
@@ -69,6 +71,32 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
     return true;
   };
 
+
+  const getFirebaseErrorMessage = (code: string): string => {
+    switch (code) {
+      case 'auth/email-already-in-use':
+        return 'Cet email est déjà utilisé par un autre compte.';
+      case 'auth/invalid-email':
+        return "L'adresse email n'est pas valide.";
+      case 'auth/user-not-found':
+        return "Aucun compte n'est associé à cet email.";
+      case 'auth/wrong-password':
+        return "L'adresse email ou le mot de passe est incorrect.";
+      case 'auth/too-many-requests':
+        return "Trop de tentatives. Veuillez réessayer plus tard.";
+      case 'auth/operation-not-allowed':
+        return "L'inscription est temporairement désactivée.";
+      case 'auth/weak-password':
+        return 'Le mot de passe est trop faible (minimum 6 caractères).';
+      case 'auth/network-request-failed':
+        return 'Problème de connexion réseau. Veuillez vérifier votre connexion.';
+      default:
+        return "Une erreur est survenue. Veuillez réessayer.";
+    }
+  };
+  
+
+
   const handleRegister = async (): Promise<void> => {
     if (!validateForm()) return;
 
@@ -78,27 +106,13 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
 
     try {
       await register(formData.email, formData.password);
-      setMessage("Un email de vérification a été envoyé. Veuillez vérifier votre email avant de vous connecter.");
+      setMessage("Un email de vérification a été envoyé. Veuillez vérifier votre boîte mail.");
+      navigation.navigate("VerifyEmail");
     } catch (err: any) {
-      let errorMessage = "Erreur lors de l'inscription";
-      switch (err.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'Cet email est déjà utilisé par un autre compte';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Email invalide';
-          break;
-        case 'auth/operation-not-allowed':
-          errorMessage = 'Opération non autorisée';
-          break;
-        case 'auth/weak-password':
-          errorMessage = 'Le mot de passe est trop faible';
-          break;
-        case 'auth/network-request-failed':
-          errorMessage = 'Erreur réseau. Veuillez vérifier votre connexion';
-          break;
-      }
-      setError(errorMessage);
+       console.log("Erreur Firebase:", err); // (optionnel) utile pendant le dev
+
+      const firebaseMessage = getFirebaseErrorMessage(err.code);
+      setError(firebaseMessage);
     } finally {
       setLoading(false);
     }

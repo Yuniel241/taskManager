@@ -1,37 +1,103 @@
-Gestionnaire de Projets
-Le Gestionnaire de Projets est une application intuitive qui permet aux utilisateurs de créer et de suivre facilement leurs projets. Grâce à une interface simple, vous pouvez ajouter des projets avec des titres, des descriptions, et des dates de début et de fin. L'application affiche une liste claire de tous les projets en cours et envoie des notifications pour les deadlines approchant.
+# 📂 Task Manager App - React Native + Expo
 
-Fonctionnalités
-Ajout de Projets : Créez de nouveaux projets avec des détails essentiels.
-Liste des Projets : Visualisez tous vos projets en cours.
-Notifications de Deadline : Recevez des alertes pour les deadlines approchant.
-Interface Intuitive : Utilise des composants React Native Paper pour une expérience utilisateur fluide.
-Installation
-Cloner le dépôt :
+Une application mobile de gestion de tâches personnelle, conçue pour t’aider à organiser tes projets, recevoir des rappels et suivre ta productivité au quotidien.
 
-Copier
-git clone https://github.com/Yuniel241/taskManager.git
-cd taskManager
-Installer les dépendances :
+---
 
+## 📱 Fonctionnalités principales
+
+- 🔐 **Authentification utilisateur**
+- ✅ **Ajout / modification / suppression de tâches**
+- 🖓 **Détection des tâches en retard (affichées en rouge)**
+- ⏰ **Notifications quotidiennes à 9h (Expo Notifications)**
+- 🔎 **Recherche et filtres dynamiques**
+- 🎯 **Marquage des tâches comme faites / à faire**
+- ✨ **Animations fluides (Reanimated)**
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/ton-utilisateur/task-manager-app.git
+cd task-manager-app
 npm install
-Lancer l'application :
+```
 
-npx react-native run-android  # Pour Android
-npx react-native run-ios     # Pour iOS
+### ▶️ Lancer l'application
 
+```bash
+npx expo start
+```
 
-Utilisation
-Ajouter un Projet : Cliquez sur le bouton "Ajouter" pour créer un nouveau projet.
-Voir les Projets : La liste des projets en cours s'affiche sur l'écran principal.
-Recevoir des Notifications : Soyez alerté lorsque les deadlines approchent.
-Contribution
-Les contributions sont les bienvenues ! Pour contribuer :
+> L'app est compatible avec Expo  EAS Workflows Android
 
-Forkez le projet.
-Créez une branche pour votre fonctionnalité (git checkout -b feature/AmazingFeature).
-Commitez vos modifications (git commit -m 'Add some AmazingFeature').
-Poussez vers la branche (git push origin feature/AmazingFeature).
-Ouvrez une Pull Request.
-Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+---
+
+## 🧠 Utilisation
+
+### 🔐 Connexion
+
+- Authentification via API.
+- Stockage sécurisé du token.
+- Redirection vers l’écran principal.
+
+### 📝 Gérer une tâche
+
+- Créer : bouton “+ Nouvelle tâche”
+- Modifier : bouton “✏️”
+- Supprimer : bouton “🗑️”
+- Marquer comme faite : bouton “✅”
+- Les tâches passées non faites = rouges
+
+### 🔔 Notifications
+
+- Planifiées tous les jours à **9h**
+- Utilise `expo-notifications`
+- Rappelle les tâches non complétées
+
+### 🔍 Filtres & recherche
+
+- Recherche en temps réel (titre ou description)
+- Filtres : “Toutes”, “À faire”, “Complétées”
+- Tri par date croissante/décroissante
+
+---
+
+## 📆 Technologies
+
+| Techno             | Usage                   |
+| ------------------ | ----------------------- |
+| React Native       | Base de l'app mobile    |
+| Expo               | Développement rapide    |
+| Axios              | Requêtes API            |
+| AsyncStorage       | Stockage local (token)  |
+| React Navigation   | Navigation entre écrans |
+| Expo Notifications | Envoi de rappels        |
+| Reanimated         | Animations fluides      |
+| TypeScript         | Typage sécurisé         |
+
+---
+
+## 🧪 À venir
+
+- 📋 Pièces jointes par tâche
+- 📊 Statistiques de productivité
+- 🌙 Dark mode
+- 🔗 Partage de projets entre utilisateurs
+- 🔐 Auth via OAuth (Google / Apple)
+
+---
+
+## 🧑‍💻 Auteur
+
+Développé avec ❤️ par [Ton Nom]
+
+> [Portfolio](https\://yuniel241.github.io/Portfolio/) · [Linkedin](http://www.linkedin.com/in/axel-yuniel)
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence MIT — libre à toi de le modifier et de le redistribuer.
+

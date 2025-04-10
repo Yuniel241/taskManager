@@ -7,12 +7,17 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  ImageBackground,
+  Dimensions,
 } from 'react-native';
 import { TextInput, Button, Text, useTheme } from 'react-native-paper';
 import { useAuth } from '../context/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/navigation';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const { width, height } = Dimensions.get('window');
 
 interface RegisterScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
@@ -124,187 +129,261 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[styles.container, { backgroundColor: colors.background }]}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+    <ImageBackground 
+      source={require('../../assets/registerBg.jpg')} 
+      style={styles.backgroundImage}
+      blurRadius={2}
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
+      <LinearGradient
+        colors={['rgba(110, 69, 226, 0.85)', 'rgba(136, 211, 206, 0.85)']}
+        style={styles.gradientOverlay}
       >
-        <View style={styles.innerContainer}>
-          <Icon 
-            name="account-plus" 
-            size={100} 
-            color={colors.primary} 
-            style={styles.icon} 
-          />
-          
-          <Text variant="headlineMedium" style={[styles.title, { color: colors.primary }]}>
-            Créer un compte
-          </Text>
-
-          {error ? (
-            <View style={[styles.messageContainer, styles.errorContainer]}>
-              <Icon name="alert-circle" size={20} color={colors.error} />
-              <Text style={[styles.messageText, { color: colors.error }]}>{error}</Text>
-            </View>
-          ) : null}
-
-          {message ? (
-            <View style={[styles.messageContainer, styles.successContainer, { backgroundColor: colors.primaryContainer }]}>
-              <Icon name="check-circle" size={20} color={colors.primary} />
-              <Text style={[styles.messageText, { color: colors.onPrimaryContainer }]}>{message}</Text>
-            </View>
-          ) : null}
-
-          <TextInput
-            label="Email"
-            value={formData.email}
-            onChangeText={(text) => handleChange('email', text)}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            style={styles.input}
-            mode="outlined"
-            left={<TextInput.Icon icon="email" color={colors.primary} />}
-            theme={{ colors: { primary: colors.primary, background: colors.surface } }}
-            disabled={loading}
-          />
-
-          <TextInput
-            label="Mot de passe"
-            value={formData.password}
-            onChangeText={(text) => handleChange('password', text)}
-            secureTextEntry={secureTextEntry}
-            style={styles.input}
-            mode="outlined"
-            left={<TextInput.Icon icon="lock" color={colors.primary} />}
-            right={
-              <TextInput.Icon
-                icon={secureTextEntry ? 'eye-off' : 'eye'}
-                onPress={() => setSecureTextEntry(!secureTextEntry)}
-                color={colors.primary}
-                disabled={loading}
-              />
-            }
-            theme={{ colors: { primary: colors.primary, background: colors.surface } }}
-            disabled={loading}
-          />
-
-          <TextInput
-            label="Confirmer le mot de passe"
-            value={formData.confirmPassword}
-            onChangeText={(text) => handleChange('confirmPassword', text)}
-            secureTextEntry={secureConfirmTextEntry}
-            style={styles.input}
-            mode="outlined"
-            left={<TextInput.Icon icon="lock-check" color={colors.primary} />}
-            right={
-              <TextInput.Icon
-                icon={secureConfirmTextEntry ? 'eye-off' : 'eye'}
-                onPress={() => setSecureConfirmTextEntry(!secureConfirmTextEntry)}
-                color={colors.primary}
-                disabled={loading}
-              />
-            }
-            theme={{ colors: { primary: colors.primary, background: colors.surface } }}
-            disabled={loading}
-          />
-
-          <Button
-            mode="contained"
-            onPress={handleRegister}
-            style={[styles.button, { backgroundColor: colors.primary }]}
-            loading={loading}
-            disabled={loading}
-            labelStyle={styles.buttonLabel}
-            contentStyle={styles.buttonContent}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+        >
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            keyboardShouldPersistTaps="handled"
           >
-            {loading ? '' : "S'inscrire"}
-          </Button>
+            <View style={styles.card}>
+              <View style={styles.logoContainer}>
+                <Icon 
+                  name="account-plus" 
+                  size={80} 
+                  color="#FFF" 
+                  style={styles.logo} 
+                />
+                <Text variant="headlineMedium" style={styles.title}>
+                  Créer un compte
+                </Text>
+              </View>
 
-          <View style={styles.loginContainer}>
-            <Text style={{ color: colors.onSurface }}>Déjà un compte ? </Text>
-            <TouchableOpacity 
-              onPress={() => navigation.navigate('Login')}
-              disabled={loading}
-            >
-              <Text style={{ 
-                color: loading ? colors.onSurfaceDisabled : colors.primary, 
-                fontWeight: 'bold' 
-              }}>
-                Se connecter
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+              {error ? (
+                <View style={styles.errorContainer}>
+                  <Icon name="alert-circle" size={20} color="#FFF" />
+                  <Text style={styles.errorText}>{error}</Text>
+                </View>
+              ) : null}
+
+              {message ? (
+                <View style={styles.successContainer}>
+                  <Icon name="check-circle" size={20} color="#FFF" />
+                  <Text style={styles.successText}>{message}</Text>
+                </View>
+              ) : null}
+
+              <TextInput
+                label="Email"
+                value={formData.email}
+                onChangeText={(text) => handleChange('email', text)}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                style={styles.input}
+                mode="flat"
+                left={<TextInput.Icon icon="email" color="#FFF" />}
+                theme={{ 
+                  colors: { 
+                    primary: '#FFF',
+                    text: '#FFF',
+                    placeholder: 'rgba(255,255,255,0.7)',
+                    background: 'transparent',
+                  } 
+                }}
+                disabled={loading}
+              />
+
+              <TextInput
+                label="Mot de passe"
+                value={formData.password}
+                onChangeText={(text) => handleChange('password', text)}
+                secureTextEntry={secureTextEntry}
+                style={styles.input}
+                mode="flat"
+                left={<TextInput.Icon icon="lock" color="#FFF" />}
+                right={
+                  <TextInput.Icon
+                    icon={secureTextEntry ? 'eye-off' : 'eye'}
+                    onPress={() => setSecureTextEntry(!secureTextEntry)}
+                    color="#FFF"
+                  />
+                }
+                theme={{ 
+                  colors: { 
+                    primary: '#FFF',
+                    text: '#FFF',
+                    placeholder: 'rgba(255,255,255,0.7)',
+                    background: 'transparent',
+                  } 
+                }}
+                disabled={loading}
+              />
+
+              <TextInput
+                label="Confirmer le mot de passe"
+                value={formData.confirmPassword}
+                onChangeText={(text) => handleChange('confirmPassword', text)}
+                secureTextEntry={secureConfirmTextEntry}
+                style={styles.input}
+                mode="flat"
+                left={<TextInput.Icon icon="lock-check" color="#FFF" />}
+                right={
+                  <TextInput.Icon
+                    icon={secureConfirmTextEntry ? 'eye-off' : 'eye'}
+                    onPress={() => setSecureConfirmTextEntry(!secureConfirmTextEntry)}
+                    color="#FFF"
+                  />
+                }
+                theme={{ 
+                  colors: { 
+                    primary: '#FFF',
+                    text: '#FFF',
+                    placeholder: 'rgba(255,255,255,0.7)',
+                    background: 'transparent',
+                  } 
+                }}
+                disabled={loading}
+              />
+
+              <Button
+                mode="contained"
+                onPress={handleRegister}
+                style={styles.registerButton}
+                loading={loading}
+                disabled={loading}
+                labelStyle={styles.buttonLabel}
+                contentStyle={styles.buttonContent}
+              >
+                {loading ? '' : "S'inscrire"}
+              </Button>
+
+              <View style={styles.loginContainer}>
+                <Text style={styles.loginText}>Déjà un compte ? </Text>
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate('Login')}
+                  disabled={loading}
+                >
+                  <Text style={styles.loginLink}>
+                    Se connecter
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  gradientOverlay: {
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
+    padding: 20,
   },
-  innerContainer: {
-    padding: 24,
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 25,
+    padding: 30,
+    filter: 'blur(10px)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 10,
   },
-  icon: {
-    alignSelf: 'center',
-    marginBottom: 16,
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  logo: {
+    marginBottom: 15,
   },
   title: {
-    textAlign: 'center',
-    marginBottom: 24,
+    color: '#FFF',
     fontWeight: 'bold',
+    fontSize: 28,
+    textAlign: 'center',
   },
   input: {
-    marginBottom: 16,
+    marginBottom: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 10,
   },
-  button: {
-    marginTop: 8,
-    borderRadius: 8,
-    elevation: 2,
+  registerButton: {
+    marginTop: 15,
+    borderRadius: 10,
+    backgroundColor: '#FFF',
+    height: 50,
+    justifyContent: 'center',
   },
   buttonLabel: {
-    color: 'white',
+    color: '#6e45e2',
     fontSize: 16,
     fontWeight: 'bold',
-    height: 48,
-    lineHeight: 48,
   },
   buttonContent: {
-    height: 48,
-  },
-  messageContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
+    height: 50,
   },
   errorContainer: {
-    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 59, 48, 0.2)',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 59, 48, 0.5)',
   },
   successContainer: {
-    backgroundColor: 'rgba(0, 255, 0, 0.1)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 199, 89, 0.2)',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(52, 199, 89, 0.5)',
   },
-  messageText: {
-    marginLeft: 8,
+  errorText: {
+    color: '#FFF',
+    marginLeft: 10,
+    fontSize: 14,
+    flexShrink: 1,
+  },
+  successText: {
+    color: '#FFF',
+    marginLeft: 10,
     fontSize: 14,
     flexShrink: 1,
   },
   loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 24,
-    alignItems: 'center',
+    marginTop: 25,
+  },
+  loginText: {
+    color: 'rgba(255, 255, 255, 0.8)',
+  },
+  loginLink: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
 });
 

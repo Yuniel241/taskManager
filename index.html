@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Gestion de tâches intelligente</title>
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #f8f9fa;
+            --accent: #ff6b6b;
+            --text: #333;
+            --light: #fff;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: var(--primary);
+            color: var(--light);
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--light);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: transform 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        section {
+            margin: 3rem 0;
+            padding: 0 1rem;
+        }
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .screenshot {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin: 1rem 0;
+        }
+        .tech-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background: var(--secondary);
+            border-radius: 20px 20px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Task Manager</h1>
+        <p class="tagline">Votre assistant personnel pour une productivité sans stress</p>
+        <a href="https://expo.dev/artifacts/eas/igqFrqCxWdysR15tBMVuAq.apk" class="cta-button">Télécharger maintenant</a>
+    </header>
+
+    <section id="pourquoi">
+        <h2>Pourquoi choisir Task Manager ?</h2>
+        <p>Dans un monde où le temps est précieux, Task Manager révolutionne votre façon d'organiser vos journées :</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h3>Gagnez du temps</h3>
+                <p>Ne perdez plus de temps à chercher ce que vous devez faire. Notre interface intuitive vous montre immédiatement vos priorités.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Rappels intelligents</h3>
+                <p>Les notifications personnalisables vous alertent au bon moment pour ne jamais oublier une échéance importante.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Clarté visuelle</h3>
+                <p>Les tâches en retard apparaissent en rouge, offrant une vision instantanée de ce qui demande votre attention urgente.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="fonctionnalites">
+        <h2>Fonctionnalités clés</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Gestion complète</h3>
+                <p>Ajoutez, modifiez ou supprimez des tâches en quelques clics. Marquez-les comme terminées d'un simple geste.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Recherche avancée</h3>
+                <p>Trouvez instantanément n'importe quelle tâche grâce à notre moteur de recherche et nos filtres intelligents.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Synchronisation</h3>
+                <p>Vos données sont sauvegardées et accessibles depuis n'importe quel appareil après connexion.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Interface moderne</h3>
+                <p>Profitez d'une expérience utilisateur fluide avec des animations soignées et un design épuré.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="techno">
+        <h2>Technologies utilisées</h2>
+        <p>Task Manager a été développé avec les dernières technologies pour garantir performance et fiabilité :</p>
+        
+        <div>
+            <span class="tech-badge">React Native</span>
+            <span class="tech-badge">Expo</span>
+            <span class="tech-badge">TypeScript</span>
+            <span class="tech-badge">Reanimated</span>
+            <span class="tech-badge">Expo Notifications</span>
+            <span class="tech-badge">AsyncStorage</span>
+        </div>
+        
+        <p>Cette combinaison nous permet d'offrir une application rapide, stable et économe en batterie.</p>
+    </section>
+
+    <section id="futur">
+        <h2>Perspectives futures</h2>
+        <p>Task Manager ne cesse d'évoluer ! Voici ce que nous préparons :</p>
+        <ul>
+            <li><strong>Mode sombre</strong> : pour un confort visuel en toutes circonstances</li>
+            <li><strong>Statistiques avancées</strong> : suivez votre productivité sur le long terme</li>
+            <li><strong>Collaboration</strong> : partagez des projets avec votre équipe</li>
+            <li><strong>Pièces jointes</strong> : ajoutez des fichiers à vos tâches</li>
+            <li><strong>Connexion sociale</strong> : authentification via Google/Apple</li>
+        </ul>
+    </section>
+
+    <section id="telechargement">
+        <h2>Essayez Task Manager dès maintenant</h2>
+        <p>Disponible gratuitement sur Android. Téléchargez la dernière version et transformez votre productivité !</p>
+        <a href="https://expo.dev/artifacts/eas/igqFrqCxWdysR15tBMVuAq.apk" class="cta-button">Télécharger l'APK</a>
+    </section>
+
+    <footer>
+        <p>Développé avec ❤️ par Yuniel241</p>
+        <p>
+            <a href="https://yuniel241.github.io/Portfolio/" target="_blank">Portfolio</a> | 
+            <a href="http://www.linkedin.com/in/axel-yuniel" target="_blank">LinkedIn</a>
+        </p>
+        <p>© 2025 Task Manager - Licence MIT</p>
+    </footer>
+</body>
+</html>

@@ -100,19 +100,44 @@
             background: var(--secondary);
             border-radius: 20px 20px 0 0;
         }
+        .logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.logo-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    background-color: var(--light);
+}
     </style>
 </head>
 <body>
     <header>
-        <h1>Task Manager</h1>
+        <div class="logo-wrapper">
+            <img src="./assets/webPage.png" alt="Logo Task Manager" class="logo-image">
+            <h1>Task Manager</h1>
+        </div>
         <p class="tagline">Votre assistant personnel pour une productivité sans stress</p>
         <a href="https://expo.dev/artifacts/eas/igqFrqCxWdysR15tBMVuAq.apk" class="cta-button">Télécharger maintenant</a>
     </header>
 
     <section id="pourquoi">
         <h2>Pourquoi choisir Task Manager ?</h2>
-        <p>Dans un monde où le temps est précieux, Task Manager révolutionne votre façon d'organiser vos journées :</p>
-        
+        <p>Task Manager est né d’un besoin réel : <strong>avoir une vue claire sur l’évolution de ses projets</strong>, qu’ils soient personnels ou professionnels.</p>
+        <p>Imaginez que vous lancez un site web : vous devez gérer le design, le développement, le contenu, les tests... Task Manager vous aide à découper ce projet en étapes simples, à suivre votre progression, et à garder vos échéances sous contrôle.</p>
+        <p>Avec Task Manager, vous ne perdez plus de temps à chercher vos projets. Vous les voyez toutes au même endroit, avec des rappels intelligents pour vous alerter au bon moment.</p>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">⏱️</div>

@@ -91,7 +91,7 @@ npx expo start
 
 ## 🧑‍💻 Auteur
 
-Développé avec ❤️ par [Ton Nom]
+Développé avec ❤️ par Yuniel241.
 
 > [Taskmanager.apk (Télécharger l'application)](https://yuniel241.github.io/taskManager/) ·[Portfolio](https\://yuniel241.github.io/Portfolio/) · [Linkedin](http://www.linkedin.com/in/axel-yuniel)
 

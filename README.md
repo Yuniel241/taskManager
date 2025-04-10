@@ -93,7 +93,7 @@ npx expo start
 
 Développé avec ❤️ par [Ton Nom]
 
-> [Portfolio](https\://yuniel241.github.io/Portfolio/) · [Linkedin](http://www.linkedin.com/in/axel-yuniel)
+> [Taskmanager.apk (Télécharger l'application)](https://yuniel241.github.io/taskManager/) ·[Portfolio](https\://yuniel241.github.io/Portfolio/) · [Linkedin](http://www.linkedin.com/in/axel-yuniel)
 
 ---
 
